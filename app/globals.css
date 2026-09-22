@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #0a0a0a;
+  --fg: #fafafa;
+  --accent: #e8b04b;
+  --muted: #7a7a7a;
+}
+
+/* ---------- Base ---------- */
+html {
+  /* NOTE: no `scroll-behavior: smooth` here — Lenis (see SmoothScroll.jsx)
+     handles smooth scrolling globally, and having both active causes
+     the two to fight on anchor-link clicks. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------------------------------------------------------------------
+   Custom cursor
+   ---------------------------------------------------------------------------
+   Hide the native OS cursor ONLY on devices with a fine pointer
+   (mouse / trackpad). Touch devices don't have a cursor to hide, and
+   hiding it there would be pointless.
+   The visual replacement is <CustomCursor /> in components/CustomCursor.jsx.
+   --------------------------------------------------------------------------- */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: none;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Selection color — small premium detail */
+::selection {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+/* ---------- Scrollbar (subtle, premium) ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ---------- Utility: display serif ---------- */
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Utility: subtle film grain overlay ---------- */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
